@@ -1,6 +1,6 @@
 {
   "name": "tempting",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Save your temporary data in memory, databases (Redis, MySQL, etc.), and even files.",
   "keywords": [
     "temp",

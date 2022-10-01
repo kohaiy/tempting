@@ -6,7 +6,7 @@ import {
 } from '../src';
 
 describe('createTempting', () => {
-  const temp = createTempting(createFileAdapter({ dirPath: './test2' }));
+  const temp = createTempting(createFileAdapter({ dirPath: './.cache' }));
   it('be null', async () => {
     expect(await temp.get('a')).toEqual(null);
   });
