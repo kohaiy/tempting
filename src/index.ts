@@ -13,6 +13,9 @@ export const createTempting = (adapter: Adapter): Tempting => {
       }
       return null;
     },
+    del(key) {
+      return adapter.del(key);
+    },
   };
 };
 
@@ -27,6 +30,9 @@ export const createSyncTempting = (adapter: SyncAdapter): SyncTempting => {
         return JSON.parse(value);
       }
       return null;
+    },
+    del(key) {
+      return adapter.del(key);
     },
   };
 };

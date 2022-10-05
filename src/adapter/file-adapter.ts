@@ -6,25 +6,33 @@ interface Options {
   dirPath: string;
 }
 
-const initialize = async (
-  dirPath: string,
-  cache: Map<string, { value: string; expireAt?: number }>
-) => {
+interface StorageType {
+  value: string;
+  expireAt?: number;
+}
+
+const initialize = async (dirPath: string, cache: Map<string, StorageType>) => {
   if (!existsSync(dirPath)) {
     mkdirSync(dirPath);
   }
   const files = await fs.readdir(dirPath);
   return Promise.all(
     files.map(async file => {
-      const data = (await fs.readFile(path.join(dirPath, file))).toString();
-      cache.set(file, JSON.parse(data));
+      const str = (await fs.readFile(path.join(dirPath, file))).toString();
+      const data: StorageType = JSON.parse(str);
+      if (data?.expireAt && data.expireAt < Date.now()) {
+        if (existsSync(path.join(dirPath, file)))
+          await fs.rm(path.join(dirPath, file));
+        return;
+      }
+      cache.set(file, data);
     })
   );
 };
 
 export const createFileAdapter = (opts: Options): Adapter => {
   const { dirPath } = opts;
-  const cache = new Map<string, { value: string; expireAt?: number }>();
+  const cache = new Map<string, StorageType>();
   const initializePromise = initialize(dirPath, cache);
 
   return {
@@ -50,6 +58,12 @@ export const createFileAdapter = (opts: Options): Adapter => {
       if (existsSync(path.join(dirPath, key)))
         await fs.rm(path.join(dirPath, key));
       return null;
+    },
+    async del(key) {
+      cache.delete(key);
+      if (existsSync(path.join(dirPath, key)))
+        await fs.rm(path.join(dirPath, key));
+      return true;
     },
   };
 };

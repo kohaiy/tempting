@@ -26,6 +26,11 @@ describe('createTempting', () => {
     await temp.set('e', { e: 1 });
     expect((await temp.get<{ e: number }>('e'))?.e).toEqual(1);
   });
+  it('be del', async () => {
+    await temp.set('f', '1');
+    await temp.del('f');
+    expect(await temp.get('f')).toEqual(null);
+  });
 });
 
 describe('createSyncTempting', () => {
@@ -48,5 +53,10 @@ describe('createSyncTempting', () => {
   it('be obj', () => {
     temp.set('e', { e: 1 });
     expect(temp.get<{ e: number }>('e')?.e).toEqual(1);
+  });
+  it('be del', async () => {
+    temp.set('f', '1');
+    temp.del('f');
+    expect(temp.get('f')).toEqual(null);
   });
 });

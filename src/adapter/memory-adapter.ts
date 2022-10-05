@@ -21,5 +21,9 @@ export const createMemoryAdapter = (): SyncAdapter => {
       cache.delete(key);
       return null;
     },
+    del(key) {
+      cache.delete(key);
+      return true;
+    },
   };
 };

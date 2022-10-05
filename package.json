@@ -1,11 +1,19 @@
 {
   "name": "tempting",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Save your temporary data in memory, databases (Redis, MySQL, etc.), and even files.",
   "keywords": [
     "temp",
     "cache"
   ],
+  "homepage": "https://github.com/kohaiy/tempting",
+  "bugs": {
+    "url": "https://github.com/kohaiy/tempting/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kohaiy/tempting.git"
+  },
   "license": "MIT",
   "author": {
     "name": "kohai",
